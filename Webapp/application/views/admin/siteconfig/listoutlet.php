@@ -1,0 +1,252 @@
+<div class="work-container">
+  <div class="path-header flex-p--v">
+                        <div class="cover--path">
+                        <h3>List All Program Dates</h3>
+                    
+                    </div>
+</div>
+<?php if($this->session->flashdata('success')): ?>
+<?php echo '<div class="alert alert-success icons-alert">
+<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+<i class="icofont icofont-close-line-circled"></i>
+</button>
+<p><strong>Success! &nbsp;&nbsp;</strong>'.$this->session->flashdata('success').'</p></div>'; ?>
+<?php endif; ?>
+<?php if($this->session->flashdata('danger')): ?>
+<?php echo '<div class="alert alert-danger icons-alert">
+<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+<i class="icofont icofont-close-line-circled"></i>
+</button>
+<p><strong>Error! &nbsp;&nbsp;</strong>'.$this->session->flashdata('danger').'</p></div>'; ?>
+<?php endif; ?>
+<div class="add_ftm-grp flex-grp a_link">
+
+<a  style="background: #3c8031; border-radius: 50px;" data-toggle="modal" data-target="#adduser" class="submit-btn-alink" >
+     <i class="fa-solid fa-plus"></i>
+     Create New </a>
+         </div>
+         <br>
+<div class="work-box card-text curve-v v-box-shadow-box">
+
+    <div class="list-user-table">
+        <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                <th>Sl No</th> 
+                    <th>Date</th>
+                    <th></th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+    
+     
+            <tbody>
+            <?php 
+     
+     $i=1;
+     foreach($userrole as $row) : 
+   
+
+     
+     ?>
+                <tr>
+                    <td><?php echo $i; ?></td>
+                    <td><?php echo $row->date; ?> </td>
+                    <td><a  data-toggle="modal" data-id="<?php echo  $row->id;?>"  data-target="#changestatus<?php echo  $row->id;?>"  href="#"><label class="badge badge-danger">Block Order</label></a></td>
+                    
+                                                   
+<!-- Modal -->
+<div class="modal fade" id="changestatus<?php echo  $row->id;?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered maxwidth--medium" role="document">
+    <div class="modal-content modal-content-radius-twt">
+      <div class="modal-header">
+        <h5 class="modal-title addusertitle--v" id="addusertitle">Block Prouct By Date </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="adduser--modal-container">
+        <form  method="post" action="<?php echo base_url() ?>admin/Dashboard/BlockedDatebyItem"  onsubmit="return check()" >
+        <input class="form-control" value="<?php echo  $row->id;?>" name="id" type="hidden">
+           
+                            <div class="row">
+                                <div class="col-lg-8 col-mb">
+                                    <div class="add_ftm-grp">
+                          <?php
+                 foreach($listproducts as $listproducts_ss)
+                                            {
+                                                $date_id=$row->id;
+  $id=$listproducts_ss['id'];
+if($id!='')
+ {
+     
+$check=$this->dashboard_model->SelectChekedList($id,$date_id);
+                                                                        
+                                            ?>
+                                            
+              <div class="form-check">
+                <input class="form-check-input big-checkbox" name="blocked_product[]" type="checkbox" value="<?php echo $listproducts_ss['id']?>" id="defaultCheck1" 
+                <?php if($listproducts_ss['id']==@$check['product_id']){?> checked  <?php }?>><?php echo $listproducts_ss['product_name']?>
+             </div>
+
+
+                                            <?php
+ }
+                                            }
+                                            ?>
+                                       
+                                    </div>
+                                </div>
+                              
+                                
+                              
+            
+                        
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="add_ftm-grp flex-group-btn modal-grp-frm--btn-container mtop-20">
+        <button class="modal--x" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+       <button type="submit"  class="modal-submit-btn">Update</button>
+                            </div>
+      </div>
+    </div>
+    </form>
+  </div>
+</div>
+                    <td>    
+                    <?php
+    if($row->status==1)
+    {
+      ?>
+      <a href='<?php echo base_url(); ?>admin/Dashboard/enable/<?php echo $row->id ; ?>?table=<?php echo base64_encode('program_dates'); ?>'style="color:#1abc9c" title="enable" ><img src="https://img.icons8.com/fluency/20/null/lock-2.png"/></a>&nbsp;
+      <?php
+    }
+    else
+    {
+      ?>
+        <a href="<?php echo base_url(); ?>admin/Dashboard/desable/<?php echo $row->id ; ?>?table=<?php echo base64_encode('program_dates'); ?>" style="color:#f1c40f" title="disable"><img src="https://img.icons8.com/fluency/20/null/unlock-2.png"/></a>&nbsp;
+      <?php
+    }
+    ?>
+  <a  data-toggle="modal" data-id="<?php echo  $row->id;?>"  data-target="#editModal<?php echo $row->id ?>"  href="#"><label class="badge badge-success">Edit</label></a>    <a style="color:red;" href="<?php echo base_url(); ?>admin/Dashboard/delete/<?php echo $row->id ; ?>?table=<?php echo base64_encode('program_dates'); ?>"><svg title="delete" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+<path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+<path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+</td>
+                </tr>
+                                                    
+<!-- Modal -->
+<div class="modal fade" id="editModal<?php echo $row->id ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered maxwidth--medium" role="document">
+    <div class="modal-content modal-content-radius-twt">
+      <div class="modal-header">
+        <h5 class="modal-title addusertitle--v" id="addusertitle">Update Date</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="adduser--modal-container">
+        <form  method="post" action="<?php echo base_url() ?>admin/Dashboard/UpdateDates"  onsubmit="return check()" >
+        <input class="form-control" value="<?php echo $row->id;  ?>" name="id" type="hidden">
+           
+                            <div class="row">
+                               
+                                <div class="col-lg-6 col-mb">
+                                    <div class="add_ftm-grp">
+                                    <input type="date" name="date" value="<?php echo $row->date; ?>" class="input-box" required>
+                                    </div>
+                                </div>
+                               
+                               
+                                
+                                
+                               
+                               
+                            
+                            </div>
+            
+                        
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="add_ftm-grp flex-group-btn modal-grp-frm--btn-container mtop-20">
+        <button class="modal--x" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+       <button type="submit"  class="modal-submit-btn">Update</button>
+                            </div>
+      </div>
+    </div>
+    </form>
+  </div>
+</div>
+<!-- //end model -->
+                <?php 
+       $i++;
+  endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="menu-container">
+<div class="menuheader">
+<div class="close-call">
+<svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M6.22566 4.81096C5.83514 4.42044 5.20197 4.42044 4.81145 4.81096C4.42092 5.20148 4.42092 5.83465 4.81145 6.22517L10.5862 11.9999L4.81151 17.7746C4.42098 18.1651 4.42098 18.7983 4.81151 19.1888C5.20203 19.5793 5.8352 19.5793 6.22572 19.1888L12.0004 13.4141L17.7751 19.1888C18.1656 19.5793 18.7988 19.5793 19.1893 19.1888C19.5798 18.7983 19.5798 18.1651 19.1893 17.7746L13.4146 11.9999L19.1893 6.22517C19.5799 5.83465 19.5799 5.20148 19.1893 4.81096C18.7988 4.42044 18.1657 4.42044 17.7751 4.81096L12.0004 10.5857L6.22566 4.81096Z" fill="black"/>
+</svg>
+</div>
+</div>
+
+<div class="list-itemlinks">
+<ul>
+<li><a href="add_user.html">Add User</a></li>
+<li><a href="list_user.html">List User</a></li>
+</ul>
+</div>
+</div>
+
+<!-- aDD Modal -->
+<div class="modal fade" id="adduser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered maxwidth--medium" role="document">
+    <div class="modal-content modal-content-radius-twt">
+      <div class="modal-header">
+        <h5 class="modal-title addusertitle--v" id="addusertitle">Create New date</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="adduser--modal-container">
+        <form  method="post" action="<?php echo base_url() ?>admin/Dashboard/SaveDate"  onsubmit="return check()" >
+
+           
+                            <div class="row">
+                                <div class="col-lg-6 col-mb">
+                                    <div class="add_ftm-grp">
+                                    <input type="date" name="date"  class="input-box" required>
+                                    </div>
+                                </div>
+                               
+                               
+                               
+                            
+                            </div>
+            
+                        
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="add_ftm-grp flex-group-btn modal-grp-frm--btn-container mtop-20">
+        <button class="modal--x" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+       <button type="submit"  class="modal-submit-btn">Save</button>
+                            </div>
+      </div>
+    </div>
+    </form>
+  </div>
+</div>

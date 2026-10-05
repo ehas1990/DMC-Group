@@ -1,0 +1,120 @@
+/* Colours
+================================================== */
+$color-blk: #000;
+$color-wht: #fff;
+$color-blu:	#11749c;
+$color-ylw: #f7b816;
+$color-gry: #212121;
+
+/* Mixins
+================================================== */
+@mixin parallax {
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-origin: padding-box;
+  background-clip: border-box;
+  background-attachment: fixed; /*scroll on mobile*/
+}
+
+
+
+
+.acc {
+
+  }
+  .acc__card {
+    position: relative;
+  }
+  .drop-down-title{
+    &::after {
+      width: 8px;
+      height: 8px;
+      border-left: 1px solid #4a6e78;
+      border-bottom: 1px solid #4a6e78;
+      position: absolute;
+      right: 17px;
+      content: " ";
+      top: 17px;
+      transform: rotate(-45deg);
+      transition: all 0.2s ease-in-out;
+    }
+    &.active::after {
+      transform: rotate(45deg);
+      transition: all 0.2s ease-in-out;
+    }
+  }
+  .acc__title {
+    background: $color-wht;
+    color: $color-gry;
+    cursor: pointer;
+    display: block;
+    position: relative;
+    text-align: left;
+    // border-radius: 10px;
+
+    a{
+            display: flex;
+            padding: 0.7em 1em;
+            margin-bottom: 5px;
+            hyphens: auto;
+            overflow-wrap: normal;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            word-break: normal;
+            word-wrap: break-word;
+            font-size: 1rem;
+            font-weight: 400;
+            letter-spacing: .009375em;
+            line-height: 1.5rem;
+            text-transform: none;
+            color: #000;
+            text-decoration: none !important;
+            border-radius: 8px;
+    }
+
+     span{
+        display: block;
+        width: 20px;
+        line-height: 0px;
+        opacity: .7;
+        margin-right: 20px;
+      svg{
+        width: 100%;
+      }
+     }
+  }
+  .acc__panel {
+    background: $color-wht;
+    color: $color-gry;
+    display: none;
+    margin: 0;
+    // padding: 0px 2em;
+    text-align: left;
+
+    ul{
+        list-style: none;
+        padding: 0px;
+        margin: 0px;
+    }
+
+    li{
+        a{
+            display: flex;
+            padding: 0em 1em;
+            border-radius: 10px;
+            margin-bottom: 5px;
+            color: #000000;
+
+            i{
+                width: 20px;
+                margin-right: 20px;
+                svg{
+                    width: 100%;
+                }
+            }
+        }
+    }
+  }
+  
