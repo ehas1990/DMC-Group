@@ -458,7 +458,7 @@ if(isset($_SESSION['message']))
                             <li><a href="qatar.html">Qatar</a></li>
                             <li><a href="abu-dhabi.html">Abu Dhabi</a></li>
                             <li><a href="dubai.html">Dubai</a></li>
-                            <li><a href="ksa">KSA</a></li>
+                            <li><a href="ksa.html">KSA</a></li>
                         </ul>
                     </div>
                 </div>
